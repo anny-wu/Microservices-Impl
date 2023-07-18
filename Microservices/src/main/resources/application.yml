@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: microservices
+  freemarker:
+    suffix: .ftl
+    charset: UTF-8
+    cache: false
+    template-loader-path: classpath:/templates/
+    request-context-attribute: request
+  main:
+    allow-circular-references: true
+  mvc:
+    favicon:
+      enabled:true
+    static-path-pattern: /static/**
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/Micro?useSSl=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+server:
+  port: 8080
+

@@ -1,13 +1,13 @@
-package com.annyw.eureka;
+package com.annyw.microservices;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EurekaApplicationTests {
-    
-    @Test
-    void contextLoads() {
-    }
-    
+class MicroservicesApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
 }
