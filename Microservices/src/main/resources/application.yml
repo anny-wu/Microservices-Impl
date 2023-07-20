@@ -1,6 +1,6 @@
 spring:
   application:
-    name: microservices
+    name: microservice
   freemarker:
     suffix: .ftl
     charset: UTF-8
@@ -19,5 +19,15 @@ spring:
     username: root
     password: 1234
 server:
-  port: 8080
-
+  port: 9999
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+eureka-user-service:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule

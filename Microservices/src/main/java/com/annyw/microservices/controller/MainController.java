@@ -1,44 +1,28 @@
 package com.annyw.microservices.controller;
-import com.annyw.microservices.bean.User;
+
+import com.annyw.microservices.feign.courseService;
+import com.annyw.microservices.feign.hobbyService;
+import com.annyw.microservices.feign.infoService;
 import com.annyw.microservices.service.UserService;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.ObjectCodec;
-import com.fasterxml.jackson.databind.JsonNode;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
-
-import java.util.*;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MainController {
     
-    @Bean
-    @LoadBalanced
-    public RestTemplate restTemplateBean(){
-        return new RestTemplate();
-    }
-    
     @Autowired
-    private RestTemplate rest;
+    FeignController controller;
     @Autowired
     UserService userService;
+    @Autowired
+    Environment environment;
     
     @GetMapping("/")
-    public String index(Model model, @RequestParam(value="selected", required = false) String selected){
+    public String index(Model model,  @RequestParam(value="selected", required = false) String selected){
         model.addAttribute("users", userService.getAllUsers());
         if(selected == null){
             model.addAttribute("selected", 1);
@@ -49,40 +33,31 @@ public class MainController {
         return "index";
     }
     
-    @PostMapping("/")
+   @PostMapping("/")
     public String getDatabase(Model model,
-        @RequestParam("id") int id, @RequestParam(value="INFO", required = false) String info,
+        @RequestParam(value="INFO", required = false) String info, @RequestParam("ids") String id,
                               @RequestParam(value="HOBBIES", required = false) String hobbies,
-                              @RequestParam(value="COURSES", required = false) String courses)
-        throws ClassNotFoundException, IOException {
+                              @RequestParam(value="COURSES", required = false) String courses) {
+        
         model.addAttribute("users", userService.getAllUsers());
         
         if (info != null) {
             //Pass column values
             model.addAttribute("dbInfo", "info");
-            final String uri = "http://info-service?id=" + id;
-            Object response = rest.getForObject(uri, ArrayList.class);
-            model.addAttribute("info", response);
-            
+            model.addAttribute("info",controller.getInfo(id));
         }
         if (hobbies != null) {
             //Pass column values
             model.addAttribute("dbHobbies", "hobbies");
-            final String uri = "http://hobby-service?id=" + id;
-            Object response = rest.getForEntity(uri, List.class);
-            model.addAttribute("hobbies", response);
+            model.addAttribute("hobbies", controller.getHobby(id));
         }
-        
         if (courses != null) {
             //Pass column values
             model.addAttribute("dbCourses", "courses");
-            final String uri = "http://course-service?id=" + id;
-            Object response
-                = rest.getForEntity(uri, List.class);
-            model.addAttribute("courses", response);
+            model.addAttribute("courses", controller.getCourse(id));
         }
         
-        model.addAttribute("selected", id);
+        model.addAttribute("selected", Integer.parseInt(id));
         return "index";
     }
 }

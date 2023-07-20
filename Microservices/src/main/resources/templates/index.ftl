@@ -1,5 +1,5 @@
 <#import "/spring.ftl" as spring/>
-<html>
+<html lang="en">
 <head>
     <title>Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -22,7 +22,7 @@
                 <div class="col-6">
                     <div class="form-outline">
                         <#if users??>
-                            <select id="selectS" name="id" class="form-select">
+                            <select id="ids" name="ids" class="form-select">
                                 <#list users as s>
                                     <#if s.id == selected>
                                         <option value=${s.id} selected>User ${s.id}</option>
@@ -60,7 +60,8 @@
                     </#if>
                     <label class="form-check-label" for="inlineCheckbox3">COURSES</label>
                 </div>
-                <button class="btn btn-outline-primary" type="submit" formmethod="post" formaction="/">Search</button>
+                <button id="sbt" class="btn btn-outline-primary" type="submit" formmethod="post"
+                        formaction="/">Search</button>
             </div>
             <div class="line">
                 <#if dbInfo??>
@@ -123,4 +124,5 @@
     </div>
 </body>
 </html>
+
 
