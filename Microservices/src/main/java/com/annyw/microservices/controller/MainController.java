@@ -1,15 +1,13 @@
 package com.annyw.microservices.controller;
 
-import com.annyw.microservices.feign.courseService;
-import com.annyw.microservices.feign.hobbyService;
-import com.annyw.microservices.feign.infoService;
 import com.annyw.microservices.service.UserService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
@@ -33,11 +31,11 @@ public class MainController {
         return "index";
     }
     
-   @PostMapping("/")
+    @PostMapping("/")
     public String getDatabase(Model model,
         @RequestParam(value="INFO", required = false) String info, @RequestParam("ids") String id,
-                              @RequestParam(value="HOBBIES", required = false) String hobbies,
-                              @RequestParam(value="COURSES", required = false) String courses) {
+        @RequestParam(value="HOBBIES", required = false) String hobbies,
+        @RequestParam(value="COURSES", required = false) String courses) {
         
         model.addAttribute("users", userService.getAllUsers());
         

@@ -1,17 +1,14 @@
 package com.annyw.microservices.controller;
+
 import com.annyw.microservices.feign.courseService;
 import com.annyw.microservices.feign.hobbyService;
 import com.annyw.microservices.feign.infoService;
-import com.annyw.microservices.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.List;
 
 @RestController
 public class FeignController {

@@ -14,7 +14,6 @@ public class MainController {
     UserService userService;
     @GetMapping("/info")
     public List<String> getDisplay(@RequestParam("id") String id){
-        System.out.println("Enter");
         User user = userService.getUserById(Integer.parseInt(id));
         List<String> result = new ArrayList<>();
         result.add(String.valueOf(user.getId()));

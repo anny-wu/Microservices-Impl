@@ -28,6 +28,3 @@ eureka:
     hostname: localhost
     lease-renewal-interval-in-seconds: 1
     lease-expiration-duration-in-seconds: 2
-eureka-user-service:
-  ribbon:
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
